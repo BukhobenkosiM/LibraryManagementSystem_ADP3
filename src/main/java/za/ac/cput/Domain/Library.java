@@ -1,23 +1,27 @@
 package za.ac.cput.Domain;
 
-import java.awt.print.Book;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /*Library.java
 Library model class
-Author: Lubabalo Notutela
+Author: Lubabalo Notutela (219298521)
 Date: 22 March 2024
  */
 
 public class Library {
-    private final int id;
-    private final String name;
-    private final String location;
-    private final String librarian;
-    private final List<Book> books;
+    private  int id;
+    private  String name;
+    private  String location;
+    private  String librarian;
+    private  List<Book> books;
 
-    private Library(Builder builder) {
+    public Library() {
+    }
+
+    public Library(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
         this.location = builder.location;
@@ -45,9 +49,32 @@ public class Library {
         return new ArrayList<>(books);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Library library)) return false;
+        return getId() == library.getId() && Objects.equals(getName(), library.getName()) && Objects.equals(getLocation(), library.getLocation()) && Objects.equals(getLibrarian(), library.getLibrarian()) && Objects.equals(getBooks(), library.getBooks());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getLocation(), getLibrarian(), getBooks());
+    }
+
+    @Override
+    public String toString() {
+        return "Library{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                ", librarian='" + librarian + '\'' +
+                ", books=" + books +
+                '}';
+    }
+
     public static class Builder {
-        private final int id;
-        private final String name;
+        private int id;
+        private String name;
         private String location;
         private String librarian;
         private List<Book> books;
@@ -70,6 +97,11 @@ public class Library {
 
         public Builder addBook(Book book) {
             this.books.add(book);
+            return this;
+        }
+
+        public Builder books(List<Book> books) {
+            this.books = books;
             return this;
         }
 

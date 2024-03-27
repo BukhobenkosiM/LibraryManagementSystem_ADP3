@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import za.ac.cput.Domain.Library;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /*LibraryRepositoryImplTest.java
@@ -88,12 +90,49 @@ public class LibraryRepositoryImplTest {
     @Test
     @Order(4)
     void getLibraryById() {
-        // Test getLibraryById method
+        // Arrange
+        LibraryRepositoryImpl repository = new LibraryRepositoryImpl();
+        Library expectedLibrary = new Library.Builder(1, "Main Library")
+                .location("Main Street")
+                .librarian("John Doe")
+                .build();
+        repository.saveLibrary(expectedLibrary);
+
+        // Act
+        Library actualLibrary = repository.getLibraryById(1);
+
+        // Assert
+        assertNotNull(actualLibrary);
+        assertEquals(expectedLibrary.getId(), actualLibrary.getId());
+        assertEquals(expectedLibrary.getName(), actualLibrary.getName());
+        assertEquals(expectedLibrary.getLocation(), actualLibrary.getLocation());
+        assertEquals(expectedLibrary.getLibrarian(), actualLibrary.getLibrarian());
     }
 
     @Test
     @Order(5)
     void getAllLibraries() {
-        // Test getAllLibraries method
+        // Arrange
+        LibraryRepositoryImpl repository = new LibraryRepositoryImpl();
+        Library library1 = new Library.Builder(1, "Main Library")
+                .location("Main Street")
+                .librarian("John Doe")
+                .build();
+        Library library2 = new Library.Builder(2, "Second Library")
+                .location("Second Street")
+                .librarian("Jane Smith")
+                .build();
+        repository.saveLibrary(library1);
+        repository.saveLibrary(library2);
+
+        // Act
+        List<Library> libraries = repository.getAllLibraries();
+
+        // Assert
+        assertNotNull(libraries);
+        assertEquals(2, libraries.size());
+        assertEquals(library1.getId(), libraries.get(0).getId());
+        assertEquals(library2.getId(), libraries.get(1).getId());
+        // Add more assertions to compare other attributes if necessary
     }
 }

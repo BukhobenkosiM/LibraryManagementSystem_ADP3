@@ -10,17 +10,19 @@ package za.ac.cput.Domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import za.ac.cput.Domain.Book;
 
 public class Publisher {
-    private final String publisherName;
-    private final String publisherLocation;
-    private final List<Book> booksPublished;
+    private  final String publisherName;
+    private  final String publisherLocation;
+    private   final List<Book> booksPublished;
 
-    private Publisher(Builder builder) {
+    public Publisher(Builder builder) {
         this.publisherName = builder.publisherName;
         this.publisherLocation = builder.location;
-        this.booksPublished = builder.booksPublished;
+        this.booksPublished = new ArrayList<>();
     }
+
 
     public String getPublisherName() {
         return publisherName;
@@ -64,9 +66,13 @@ public class Publisher {
         }
 
         public Builder setPublisherName(String publisherName) {
+            if (publisherName == null || publisherName.isEmpty()) {
+                throw new IllegalArgumentException("Publisher name cannot be null or empty");
+            }
             this.publisherName = publisherName;
             return this;
         }
+
 
         public Builder setLocation(String location) {
             this.location = location;
@@ -77,6 +83,13 @@ public class Publisher {
             this.booksPublished = booksPublished;
             return this;
         }
+
+        public Builder addBook(Book book) {
+            this.booksPublished.add(book);
+            return this;
+        }
+
+
 
         public Publisher build() {
             return new Publisher(this);

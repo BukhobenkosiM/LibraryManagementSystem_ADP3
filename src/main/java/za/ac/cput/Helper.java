@@ -1,7 +1,7 @@
 package za.ac.cput;
 
 public class Helper {
-    public static void main(String[] args) {
-        System.out.println("Hello world!");
+    public boolean isNullOrEmpty(String str) {
+        return str == null || str.trim().isEmpty();
     }
 }

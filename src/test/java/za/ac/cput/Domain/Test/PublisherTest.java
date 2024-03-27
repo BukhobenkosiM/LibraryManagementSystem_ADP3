@@ -27,17 +27,23 @@ class PublisherTest {
     @Order(1)
     void createPublisher_withValidData_shouldReturnPublisher() {
         List<Book> booksPublished = new ArrayList<>();
-        booksPublished.add(new Book("Book Title", "Author"));
+        booksPublished.add(new Book.Builder("123456", "Book Title")
+                .author("Author Name")
+                .build());
 
         Publisher.Builder builder = new Publisher.Builder("Publisher Name", "Location");
-        builder.setBooksPublished(booksPublished);
+        builder.addBook(new Book.Builder("123456", "Book Title")
+                .author("Author Name")
+                .build());
         Publisher publisher = builder.build();
 
         assertNotNull(publisher);
         assertEquals("Publisher Name", publisher.getPublisherName());
         assertEquals("Location", publisher.getPublisherLocation());
-        assertEquals(1, publisher.getBooksPublished().size());
+        assertEquals(1, publisher.getBooksPublished().size()); // Check if one book is added
     }
+
+
 
     /**
      * This test checks if a Publisher can be created with an empty name.

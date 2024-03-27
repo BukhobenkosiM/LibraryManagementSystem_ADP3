@@ -34,8 +34,14 @@ public class LibraryRepositoryImpl implements IRepository {
     }
 
     @Override
-    public void deleteLibrary(int id) {
-        libraries.removeIf(library -> library.getId() == id);
+    public boolean deleteLibrary(int id) {
+        for (Library library : libraries) {
+            if (library.getId() == id) {
+                libraries.remove(library);
+                return true; // Deletion successful
+            }
+        }
+        return false; // Library with specified id not found
     }
 
     @Override

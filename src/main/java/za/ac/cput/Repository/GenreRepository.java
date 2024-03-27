@@ -11,8 +11,11 @@ Date: 22 March 2024
  */
 
 public interface GenreRepository {
-    void saveGenre(Genre genre);
+    Genre saveGenre(Genre genre);
     Genre findGenreByName(String name);
-    void deleteGenre(String name);
+
+    Genre updateGenre(Genre genre);
+
+    boolean deleteGenre(String name);
     List<Genre> getAllGenres();
 }
